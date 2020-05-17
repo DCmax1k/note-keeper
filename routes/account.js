@@ -69,6 +69,7 @@ router.get('/:username', async (req, res) => {
   }
 });
 
+// Add note
 router.post('/:id/addnote', async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.id);
@@ -87,6 +88,7 @@ router.post('/:id/addnote', async (req, res) => {
   }
 });
 
+// Delete note
 router.post('/:id/deletenote', async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.id);
@@ -105,6 +107,7 @@ router.post('/:id/deletenote', async (req, res) => {
   }
 });
 
+// Log out
 router.post('/logout/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -127,6 +130,7 @@ router.post('/logout/:id', async (req, res) => {
   }
 });
 
+// Delete all notes
 router.post('/:id/deleteallnotes', async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.id);

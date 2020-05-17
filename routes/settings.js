@@ -27,8 +27,7 @@ router.post('/:id/changepassword', async (req, res) => {
     const currentUser = await User.findById(req.params.id);
     if (currentUser.password != req.body.currentPassword) {
       res.redirect(`/settings/${currentUser.username}?k=${currentUser._id}`);
-    }
-    if (currentUser.online == true) {
+    } else if (currentUser.online == true) {
       const updatePassword = await User.findByIdAndUpdate(
         req.params.id,
         {
