@@ -57,6 +57,87 @@
       header ul li a:hover {
         box-shadow: -1px 1px 3px 1px rgb(61, 61, 61);
       }
+      body {
+        background: repeating-linear-gradient(
+            -45deg,
+            rgba(255, 255, 255, 0.3),
+            rgba(0, 0, 0, 0.3) 40%
+          ),
+          linear-gradient(to right, grey, lightgrey);
+        height: 100vh;
+      }
+      .body-cont .title {
+        height: 250px;
+        width: 80%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 30%;
+        border: 1px solid black;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 40px;
+        box-shadow: -10px 10px 10px rgba(0, 0, 0, 0.7);
+      }
+      .body-cont .title h1 {
+        font-size: 60px;
+        margin-bottom: 20px;
+        text-decoration: underline;
+      }
+      .body-cont .title h3 {
+        font-size: 30px;
+      }
+      .body-cont .title a {
+        position: absolute;
+        bottom: 20px;
+        right: 80px;
+        border: 1px solid black;
+        color: white;
+        background-color: black;
+        padding: 5px;
+        border-radius: 5px;
+        width: 150px;
+        height: 50px;
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        transition: all 0.3s ease;
+      }
+      .body-cont .title a:hover {
+        background-color: transparent;
+        color: black;
+        box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.7);
+      }
+      footer {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      }
+      footer .triangle {
+        height: 200px;
+        width: 200px;
+        border: 200px solid rgba(0, 0, 0, 0);
+        border-right: 200px solid black;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform: rotate(-135deg) translateX(-71%);
+        overflow: hidden;
+      }
+      footer .text {
+        position: fixed;
+        right: 40px;
+        bottom: 20px;
+        display: flex;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
       @media screen and (max-width: 800px) {
         header {
           height: 160px;
@@ -87,10 +168,27 @@
           transform: translate(0, 0);
           justify-content: space-around;
         }
+        .body-cont .title h1 {
+          font-size: 40px;
+        }
+        .body-cont .title h3 {
+          font-size: 20px;
+        }
+      }
+      @media screen and (max-width: 400px) {
+        .body-cont .title {
+          width: 95%;
+        }
+        .body-cont .title h1 {
+          font-size: 35px;
+        }
       }
       @media screen and (max-width: 300px) {
         .logo h1 {
-          font-size: 20px;
+          font-size: 25px;
+        }
+        .body-cont .title {
+          height: 50%;
         }
       }
     </style>
@@ -103,5 +201,19 @@
         <li><a href="/login">Log In!</a></li>
       </ul>
     </header>
+    <div class="body-cont">
+      <div class="title">
+        <h1>Note Keeper ✓</h1>
+        <h3>Keep all your notes in one place with the click of a button!</h3>
+        <a href="/signup">GO!</a>
+      </div>
+    </div>
+    <footer>
+      <div class="triangle"></div>
+      <div class="text">
+        <p>© 2020 Dylan Caldwell</p>
+        <p>All rights reserved</p>
+      </div>
+    </footer>
   </body>
 </html>
