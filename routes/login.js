@@ -4,8 +4,8 @@ const router = express.Router();
 const User = require('../models/User');
 
 router.get('/', async (req, res) => {
-  const users = await User.find();
   try {
+    const users = await User.find();
     if (req.query.e === 'true') {
       res.render('loginerror');
     } else if (req.query.e === 'log') {

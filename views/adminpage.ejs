@@ -121,9 +121,33 @@
                       border-radius: 2px;
                       padding: 2px;
                       cursor: pointer;
+                      margin-top: 2px;
                     "
                   >
                     !Grant Admin!
+                  </button>
+                </form>
+              </li>
+              <li>
+                <form
+                  id="adminDeleteForm"
+                  method="POST"
+                  action="/settings/<%= user._id %>/<%= aUser.username %>/admindelete?k=<%= aUser._id %>"
+                >
+                  <button
+                    type="submit"
+                    id="adminDeleteSubmit"
+                    style="
+                      color: red;
+                      background-color: transparent;
+                      border: 1px solid black;
+                      border-radius: 2px;
+                      padding: 2px;
+                      cursor: pointer;
+                      margin-top: 2px;
+                    "
+                  >
+                    !Delete Account!
                   </button>
                 </form>
               </li>

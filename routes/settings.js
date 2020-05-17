@@ -87,6 +87,29 @@ router.get('/admin/:username', async (req, res) => {
   }
 });
 
+// Admin delete
+router.post('/:adminid/:username/admindelete', async (req, res) => {
+  try {
+    const admin = await User.findById(req.params.adminid);
+    const currentUser = await User.findById(req.query.k);
+    if (
+      admin.rank === 'admin' &&
+      currentUser.username === req.params.username
+    ) {
+      const deleteUser = await User.deleteOne({
+        username: currentUser.username,
+      });
+      res.redirect(`/settings/admin/${admin.username}?k=${admin._id}`);
+    } else {
+      if (!req.headersSent) {
+        res.redirect('/login');
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 router.post('/:admin/:username', async (req, res) => {
   try {
     const admin = await User.findById(req.params.admin);
