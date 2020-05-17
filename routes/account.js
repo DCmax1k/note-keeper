@@ -56,8 +56,8 @@ router.post('/login', async (req, res) => {
 
 // Actual user page
 router.get('/:username', async (req, res) => {
-  const user = await User.findOne({ username: req.params.username });
   try {
+    const user = await User.findOne({ username: req.params.username });
     if (req.query.k == user._id && user.online === true) {
       res.render('account', { user: user });
     } else {
@@ -70,8 +70,8 @@ router.get('/:username', async (req, res) => {
 });
 
 router.post('/:id/addnote', async (req, res) => {
-  const currentUser = await User.findById(req.params.id);
   try {
+    const currentUser = await User.findById(req.params.id);
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       {
@@ -88,8 +88,8 @@ router.post('/:id/addnote', async (req, res) => {
 });
 
 router.post('/:id/deletenote', async (req, res) => {
-  const currentUser = await User.findById(req.params.id);
   try {
+    const currentUser = await User.findById(req.params.id);
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       {
