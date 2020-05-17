@@ -19,5 +19,3 @@ MongoDB
 ### Version Control:
 
 Git
-
-### Libraries:
