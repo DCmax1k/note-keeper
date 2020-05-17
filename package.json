@@ -2,11 +2,12 @@
   "name": "note-keeper-api",
   "version": "1.0.0",
   "description": "A login system to keep notes",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon server.js",
+    "start": "node server.js"
   },
-  "author": "",
+  "author": "Dylan Caldwell",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
