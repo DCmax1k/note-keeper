@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup Page!</title>
+  </head>
+  <body>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&display=swap'); /* font-family: 'DM Mono', monospace; */
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      header {
+        position: relative;
+        background: linear-gradient(to right, grey, lightgrey);
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 80px;
+      }
+      .logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+      }
+      .logo h1 {
+        font-family: 'DM Mono', monospace;
+        text-align: center;
+      }
+      form {
+        height: 500px;
+        width: 400px;
+        border: 2px solid black;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      form label,
+      form input {
+        height: 30px !important;
+        transform: translateY(-100%);
+      }
+      form h1 {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
+      }
+      form hr {
+        width: 90%;
+        position: absolute;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      form .alert-msg p {
+        border: 1px solid red;
+        height: 65px;
+        width: 50%;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: red;
+        border-radius: 5px;
+        visibility: hidden;
+        color: white;
+        text-align: center;
+        padding: 3px;
+      }
+      form input {
+        margin: 5px;
+        width: 90%;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid grey;
+        outline: none;
+        padding: 3px;
+        transition: all 0.3s ease;
+      }
+      form input:focus {
+        box-shadow: 0 0 0 2px rgb(0, 146, 231);
+      }
+      form label {
+        margin-top: 15px;
+        width: 90%;
+      }
+      form button {
+        height: 40px;
+        width: 40%;
+        border-radius: 5px;
+        padding: 5px;
+        color: white;
+        background-color: black;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 2px solid black;
+        outline: none;
+      }
+      form a {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: black;
+        width: 100%;
+        text-align: center;
+        transition: all 0.4s ease;
+      }
+      form a:hover {
+        color: rgb(0, 125, 156);
+      }
+      form button:hover {
+        background-color: transparent;
+        color: black;
+      }
+      form button:focus {
+        box-shadow: 0 0 0 2px rgb(0, 146, 231);
+      }
+      .all-users {
+        display: none;
+      }
+      @media screen and (max-width: 500px) {
+        form {
+          width: 95%;
+        }
+      }
+      @media screen and (max-width: 300px) {
+        form {
+          height: 550px;
+        }
+        .logo h1 {
+          font-size: 20px;
+        }
+        form h1 {
+          font-size: 20px;
+        }
+        form button {
+          bottom: 70px;
+          width: 75%;
+        }
+      }
+      @media screen and (max-width: 226px) {
+        form a {
+          bottom: 20px;
+          font-size: 15px;
+        }
+      }
+    </style>
+    <header>
+      <div class="logo">
+        <h1>Note Keeper ✓</h1>
+      </div>
+    </header>
+    <div class="body-cont">
+      <form action="/account" method="POST" name="signup-form">
+        <h1>Sign Up!</h1>
+        <hr />
+        <div class="alert-msg">
+          <p></p>
+        </div>
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email..."
+          required
+        />
+
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Username..."
+          required
+        />
+
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password..."
+          required
+        />
+
+        <label for="conpass">Confirm Password:</label>
+        <input
+          type="password"
+          id="conpass"
+          name="conpass"
+          placeholder="Confirm Password..."
+          required
+        />
+        <button type="submit" id="submit">Submit!</button>
+        <a href="/login">Already have an account? Log in!</a>
+      </form>
+      <div class="all-users">
+        <% users.forEach(user => { %>
+        <p><%= user.username %></p>
+        <p><%= user.email %></p>
+        <% }) %>
+      </div>
+    </div>
+    <script>
+      const alertMsg = document.querySelector('.alert-msg p');
+      const email = document.getElementById('email');
+      const username = document.getElementById('username');
+      const password = document.getElementById('password');
+      const conpass = document.getElementById('conpass');
+      const submitBtn = document.getElementById('submit');
+
+      const users = document.querySelector('.all-users');
+
+      submitBtn.addEventListener('click', (e) => {
+        if (password.value !== conpass.value) {
+          e.preventDefault();
+          alertMsg.innerText = "The passwords don't match!";
+          alertMsg.style.visibility = 'visible';
+          setTimeout(() => (alertMsg.style.visibility = 'hidden'), 5000);
+        }
+        if (password.value.length < 5) {
+          e.preventDefault();
+          alertMsg.innerText = 'Password must be at least 5 characters long!';
+          alertMsg.style.visibility = 'visible';
+          setTimeout(() => (alertMsg.style.visibility = 'hidden'), 5000);
+        }
+        if (users.innerHTML.includes(`<p>${email.value}</p>`) === true) {
+          e.preventDefault();
+          alertMsg.innerText = 'Email is taken!';
+          alertMsg.style.visibility = 'visible';
+          setTimeout(() => (alertMsg.style.visibility = 'hidden'), 5000);
+        }
+        if (users.innerHTML.includes(`<p>${username.value}</p>`) === true) {
+          e.preventDefault();
+          alertMsg.innerText = 'Username is taken!';
+          alertMsg.style.visibility = 'visible';
+          setTimeout(() => (alertMsg.style.visibility = 'hidden'), 5000);
+        }
+      });
+    </script>
+  </body>
+</html>

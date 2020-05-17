@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= user.username %>'s Settings</title>
+  </head>
+  <body>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      header {
+        display: flex;
+        width: 100%;
+        height: 80px;
+        justify-content: space-around;
+        align-items: center;
+        position: relative;
+      }
+      header h1 {
+        text-align: center;
+      }
+      header .logout-btn #logoutBtn {
+        font-size: 23px;
+        border: 1px solid black;
+        background-color: black;
+        color: white;
+        padding: 8px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      header .back {
+        cursor: pointer;
+        font-size: 23px;
+        border: 1px solid black;
+        background-color: black;
+        color: white;
+        padding: 8px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      .settings a:hover {
+        box-shadow: -1px 1px 3px 1px rgb(61, 61, 61);
+      }
+      body {
+        background: linear-gradient(to right, grey, lightgrey);
+      }
+      .admin-btn {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .admin-btn a {
+        cursor: pointer;
+        font-size: 15px;
+        border: 1px solid black;
+        background-color: red;
+        color: white;
+        padding: 8px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      .information {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 500px;
+        justify-content: space-around;
+      }
+      #changePassword h3 {
+        margin: 5px;
+      }
+      #changePassword input {
+        padding: 3px;
+        border: 1px solid black;
+        border-radius: 5px;
+        outline: none;
+        transition: all 0.3s ease;
+        margin-right: 5px;
+        height: 30px;
+      }
+      #changePassword input:focus {
+        box-shadow: 0 0 0 2px rgb(0, 140, 255);
+      }
+      #changePassword button {
+        border: 1px solid black;
+        height: 30px;
+        border-radius: 5px;
+        background-color: black;
+        color: white;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        padding: 3px;
+      }
+      #changePassword button:hover {
+        background-color: transparent;
+        color: black;
+      }
+      #deleteAccount button {
+        height: 30px;
+        background-color: rgb(224, 0, 0);
+        color: white;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        padding: 3px;
+        outline: none;
+        border-radius: 5px;
+        border: none;
+      }
+      #deleteAccount button:hover {
+        transform: scale(1.1);
+      }
+      #deleteAccount button:focus {
+        box-shadow: 0 0 0 2px rgb(255, 125, 125);
+      }
+      .bottom-btns {
+        visibility: hidden;
+      }
+      @media screen and (max-width: 500px) {
+        .admin-btn {
+          position: absolute;
+          transform: translateY(60%);
+          width: 100%;
+        }
+        .admin-btn a {
+          width: 75%;
+          text-align: center;
+        }
+        .information {
+          margin: 10px;
+        }
+        .information form {
+          display: flex;
+          flex-direction: column;
+        }
+        .information form input {
+          margin-top: 5px;
+          width: 100%;
+        }
+        .information form button {
+          margin-top: 5px;
+          width: 100%;
+        }
+      }
+      @media screen and (max-width: 400px) {
+        .bottom-btns {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          width: 100%;
+          visibility: visible;
+        }
+        .bottom-btns .back2 {
+          cursor: pointer;
+          font-size: 23px;
+          border: 1px solid black;
+          background-color: black;
+          color: white;
+          padding: 8px;
+          border-radius: 10px;
+          transition: all 0.3s ease;
+          text-decoration: none;
+        }
+        .bottom-btns .back2:hover {
+          box-shadow: -1px 1px 3px 1px rgb(61, 61, 61);
+        }
+        header .back {
+          visibility: hidden;
+        }
+        header .logout-btn {
+          visibility: hidden;
+        }
+        .bottom-btns .logout-btn2 #logoutBtn2 {
+          font-size: 23px;
+          border: 1px solid black;
+          background-color: black;
+          color: white;
+          padding: 8px;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          text-decoration: none;
+        }
+      }
+    </style>
+    <header>
+      <a href="/account/<%= user.username %>?k=<%= user._id %>" class="back"
+        >Back</a
+      >
+      <h1>Settings</h1>
+      <% if (user.rank === 'admin') { %>
+      <div class="admin-btn">
+        <a href="/settings/admin/<%= user.username %>?k=<%= user._id %>"
+          >!Admin Accessibility!</a
+        >
+      </div>
+      <% } %>
+      <form
+        action="/account/logout/<%= user._id %>"
+        method="POST"
+        class="logout-btn"
+      >
+        <button type="submit" id="logoutBtn">Log out</button>
+      </form>
+    </header>
+    <div class="body-cont">
+      <div class="information">
+        <form
+          action="/settings/<%= user._id %>/changepassword"
+          method="POST"
+          id="changePassword"
+        >
+          <h3>Change Password:</h3>
+          <input
+            type="password"
+            placeholder="Current Password"
+            name="currentPassword"
+            id="currentPassword"
+            required
+          />
+          <input
+            type="password"
+            placeholder="New Password"
+            name="newPassword"
+            id="newPassword"
+            required
+          />
+          <button type="submit" id="submitPassword">Change</button>
+        </form>
+        <form
+          action="/settings/<%= user._id %>/deleteaccount"
+          method="POST"
+          id="deleteAccount"
+        >
+          <button id="submitDeleteAccount" type="submit">Delete Account</button>
+        </form>
+      </div>
+      <div class="bottom-btns">
+        <a
+          id="backBtn2"
+          href="/account/<%= user.username %>?k=<%= user._id %>"
+          class="back2"
+          >Back</a
+        >
+        <form
+          action="/account/logout/<%= user._id %>"
+          method="POST"
+          class="logout-btn2"
+        >
+          <button type="submit" id="logoutBtn2">Log out</button>
+        </form>
+      </div>
+    </div>
+    <script>
+      const passForm = document.getElementById('changePassword');
+      const passCurrent = document.getElementById('currentPassword');
+      const passNew = document.getElementById('newPassword');
+      const passSubmit = document.getElementById('submitPassword');
+
+      passSubmit.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (passCurrent.value && passNew.value) {
+          if (passCurrent.value === passNew.value) {
+            alert('Passwords must be different!');
+          } else if (passCurrent.vlaue !== passNew.value) {
+            passForm.submit();
+          } else if (passNew.value.length < 5) {
+            alert('Password mush be 5 characters long!');
+          }
+        } else {
+          alert('No information entered!');
+        }
+      });
+
+      const deleteAccountForm = document.getElementById('deleteAccount');
+      const deleteAccountSubmit = document.getElementById(
+        'submitDeleteAccount'
+      );
+
+      deleteAccountSubmit.addEventListener('click', (e) => {
+        e.preventDefault();
+        const confirmBox = confirm(
+          'Are you sure you want to do this? This can NOT be undone!'
+        );
+        if (confirmBox) {
+          deleteAccountForm.submit();
+        }
+      });
+    </script>
+  </body>
+</html>

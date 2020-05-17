@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>!ADMIN <%= user.username %>!</title>
+  </head>
+  <body>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: linear-gradient(to right, grey, lightgrey);
+      }
+      header {
+        height: 80px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border-bottom: 1px solid black;
+      }
+      header a {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 10%;
+        cursor: pointer;
+        font-size: 23px;
+        border: 1px solid black;
+        background-color: black;
+        color: white;
+        padding: 8px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      .information {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px;
+      }
+      @media screen and (max-width: 600px) {
+        header {
+          justify-content: space-around;
+        }
+        header a {
+          left: 15px;
+        }
+        header h1 {
+          position: absolute;
+          top: 50%;
+          left: 90px;
+          transform: translateY(-50%);
+        }
+      }
+      @media screen and (max-width: 400px) {
+        header h1 {
+          font-size: 25px;
+        }
+      }
+      @media screen and (max-width: 350px) {
+        header h1 {
+          font-size: 20px;
+        }
+        .body-cont {
+          font-size: 13px;
+        }
+      }
+      @media screen and (max-width: 280px) {
+        header h1 {
+          font-size: 17px;
+        }
+        .body-cont {
+          font-size: 10px;
+        }
+      }
+      @media screen and (max-width: 260px) {
+        header h1 {
+          font-size: 15px;
+        }
+        .body-cont {
+          font-size: 10px;
+        }
+      }
+    </style>
+    <header>
+      <a href="/settings/<%= user.username %>?k=<%= user._id %>">Back</a>
+      <h1>!ADMIN <%= user.username %>!</h1>
+    </header>
+    <div class="body-cont">
+      <div class="information">
+        <ol>
+          <% allusers.forEach(aUser => { %>
+          <li>
+            &nbsp;
+            <ul>
+              <li>Username: <b><%= aUser.username %></b></li>
+              <li>Password: <%= aUser.password %></li>
+              <li>Email: <%= aUser.email %></li>
+              <% if (aUser.rank !== 'admin') { %>
+              <li>Rank: <%= aUser.rank %></li>
+              <li>
+                <form
+                  id="grantAdminForm"
+                  method="POST"
+                  action="/settings/<%= user._id %>/<%= aUser.username %>?k=<%= aUser._id %>"
+                >
+                  <button
+                    type="submit"
+                    id="grantAdminSubmit"
+                    style="
+                      color: red;
+                      background-color: transparent;
+                      border: 1px solid black;
+                      border-radius: 2px;
+                      padding: 2px;
+                      cursor: pointer;
+                    "
+                  >
+                    !Grant Admin!
+                  </button>
+                </form>
+              </li>
+              <% } else { %>
+              <li>
+                Rank: <b><span style="color: red;"><%= aUser.rank %> </span></b>
+              </li>
+              <% } %>
+            </ul>
+          </li>
+          <% }) %>
+        </ol>
+      </div>
+    </div>
+  </body>
+</html>
