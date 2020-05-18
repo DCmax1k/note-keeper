@@ -5,13 +5,15 @@ const User = require('../models/User');
 
 router.get('/', async (req, res) => {
   try {
-    const users = await User.find();
     if (req.query.e === 'true') {
-      res.render('login', { status: 'error' });
+      res.render('login', { status: 'error', user: 'none' });
     } else if (req.query.e === 'log') {
-      res.render('login', { status: 'successful' });
+      res.render('login', {
+        status: 'successful',
+        user: { username: req.query.username },
+      });
     } else {
-      res.render('login', { status: 'good' });
+      res.render('login', { status: 'good', user: 'none' });
     }
   } catch (err) {
     console.error(err);

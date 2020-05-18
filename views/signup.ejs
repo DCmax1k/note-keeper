@@ -53,6 +53,37 @@
         left: 50%;
         transform: translateX(-50%);
       }
+      form p {
+        position: absolute;
+      }
+      #emailAlert {
+        top: 17%;
+        left: 6%;
+        color: red;
+        font-size: 11px;
+        visibility: hidden;
+      }
+      #usernameAlert {
+        top: 34%;
+        left: 6%;
+        color: red;
+        font-size: 11px;
+        visibility: hidden;
+      }
+      #passwordAlert {
+        top: 51%;
+        left: 6%;
+        color: red;
+        font-size: 11px;
+        visibility: hidden;
+      }
+      #conpassAlert {
+        top: 68.5%;
+        left: 6%;
+        color: red;
+        font-size: 11px;
+        visibility: hidden;
+      }
       form label,
       form input {
         height: 30px !important;
@@ -183,10 +214,8 @@
       <form action="/account" method="POST" name="signup-form">
         <h1>Sign Up!</h1>
         <hr />
-        <div class="alert-msg">
-          <p></p>
-        </div>
         <label for="email">Email:</label>
+        <p id="emailAlert">Email is taken!</p>
         <input
           type="email"
           id="email"
@@ -198,6 +227,7 @@
         <label for="username"
           >Username: <i class="fas fa-info-circle"></i> Cap sensative!
         </label>
+        <p id="usernameAlert">Username is taken!</p>
         <input
           type="text"
           id="username"
@@ -207,6 +237,7 @@
         />
 
         <label for="password">Password:</label>
+        <p id="passwordAlert">Password must be 5 charactors or more!</p>
         <input
           type="password"
           id="password"
@@ -216,6 +247,7 @@
         />
 
         <label for="conpass">Confirm Password:</label>
+        <p id="conpassAlert">Password doesn't match!</p>
         <input
           type="password"
           id="conpass"
@@ -234,40 +266,57 @@
       </div>
     </div>
     <script>
-      const alertMsg = document.querySelector('.alert-msg p');
       const email = document.getElementById('email');
       const username = document.getElementById('username');
       const password = document.getElementById('password');
       const conpass = document.getElementById('conpass');
       const submitBtn = document.getElementById('submit');
 
+      const emailAlert = document.getElementById('emailAlert');
+      const usernameAlert = document.getElementById('usernameAlert');
+      const passwordAlert = document.getElementById('passwordAlert');
+      const conpassAlert = document.getElementById('conpassAlert');
+
       const users = document.querySelector('.all-users');
 
       submitBtn.addEventListener('click', (e) => {
         if (password.value !== conpass.value) {
           e.preventDefault();
-          alertMsg.innerText = "The passwords don't match!";
-          alertMsg.style.visibility = 'visible';
-          setTimeout(() => (alertMsg.style.visibility = 'hidden'), 5000);
+          conpassAlert.style.visibility = 'visible';
+          conpass.style.border = '1px solid red';
         }
         if (password.value.length < 5) {
           e.preventDefault();
-          alertMsg.innerText = 'Password must be at least 5 characters long!';
-          alertMsg.style.visibility = 'visible';
-          setTimeout(() => (alertMsg.style.visibility = 'hidden'), 5000);
+          passwordAlert.style.visibility = 'visible';
+          password.style.border = '1px solid red';
         }
         if (users.innerHTML.includes(`<p>${email.value}</p>`) === true) {
           e.preventDefault();
-          alertMsg.innerText = 'Email is taken!';
-          alertMsg.style.visibility = 'visible';
-          setTimeout(() => (alertMsg.style.visibility = 'hidden'), 5000);
+          emailAlert.style.visibility = 'visible';
+          email.style.border = '1px solid red';
         }
         if (users.innerHTML.includes(`<p>${username.value}</p>`) === true) {
           e.preventDefault();
-          alertMsg.innerText = 'Username is taken!';
-          alertMsg.style.visibility = 'visible';
-          setTimeout(() => (alertMsg.style.visibility = 'hidden'), 5000);
+          usernameAlert.style.visibility = 'visible';
+          username.style.border = '1px solid red';
         }
+      });
+
+      email.addEventListener('click', () => {
+        email.style.border = '1px solid grey';
+        emailAlert.style.visibility = 'hidden';
+      });
+      username.addEventListener('click', () => {
+        username.style.border = '1px solid grey';
+        usernameAlert.style.visibility = 'hidden';
+      });
+      password.addEventListener('click', () => {
+        password.style.border = '1px solid grey';
+        passwordAlert.style.visibility = 'hidden';
+      });
+      conpass.addEventListener('click', () => {
+        conpass.style.border = '1px solid grey';
+        conpassAlert.style.visibility = 'hidden';
       });
     </script>
   </body>

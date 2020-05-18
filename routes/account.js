@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
   });
   try {
     const saveUser = await user.save();
-    res.redirect('/login?e=log');
+    res.redirect(`/login?e=log&username=${req.body.username}`);
   } catch (e) {
     console.log(e);
     res.redirect('/signup');

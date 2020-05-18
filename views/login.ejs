@@ -21,6 +21,9 @@
         width: 100%;
         height: 80px;
       }
+      #hiddenUser {
+        display: none;
+      }
       .logo {
         position: absolute;
         top: 50%;
@@ -239,6 +242,7 @@
         <a href="/signup">Don't have an account? Sign Up!</a>
       </form>
       <div class="all-users"></div>
+      <div id="hiddenUser"><%= user.username %></div>
     </div>
     <% if (status === 'successful') { %>
     <script>
@@ -247,6 +251,12 @@
       setTimeout(() => {
         document.querySelector('.alert-msg p').style.visibility = 'hidden';
       }, 5000);
+    </script>
+    <% } %> <% if (user) { %>
+    <script>
+      document.getElementById('username').value = document.getElementById(
+        'hiddenUser'
+      ).innerText;
     </script>
     <% } %>
   </body>
