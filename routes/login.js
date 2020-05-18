@@ -7,11 +7,11 @@ router.get('/', async (req, res) => {
   try {
     const users = await User.find();
     if (req.query.e === 'true') {
-      res.render('loginerror');
+      res.render('login', { status: 'error' });
     } else if (req.query.e === 'log') {
-      res.render('loginsucc');
+      res.render('login', { status: 'successful' });
     } else {
-      res.render('login');
+      res.render('login', { status: 'good' });
     }
   } catch (err) {
     console.error(err);

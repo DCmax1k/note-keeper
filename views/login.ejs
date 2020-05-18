@@ -8,7 +8,6 @@
   <body>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&display=swap'); /* font-family: 'DM Mono', monospace; */
-
       * {
         margin: 0;
         padding: 0;
@@ -67,24 +66,6 @@
         left: 50%;
         transform: translateX(-50%);
       }
-      form .alert-msg p {
-        border: 1px solid red;
-        height: 65px;
-        width: 50%;
-        position: absolute;
-        top: 65px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: red;
-        border-radius: 5px;
-        color: white;
-        text-align: center;
-        padding: 3px;
-        visibility: hidden;
-      }
       form input {
         margin: 5px;
         width: 90%;
@@ -97,6 +78,15 @@
       }
       form input:focus {
         box-shadow: 0 0 0 2px rgb(0, 146, 231);
+      }
+      .alert-text {
+        position: absolute;
+        left: 6%;
+        top: 53%;
+      }
+      .alert-text p {
+        color: red;
+        font-size: 11px;
       }
       form label {
         margin-top: 20px;
@@ -157,10 +147,58 @@
       @media screen and (max-width: 226px) {
         form a {
           bottom: 20px;
-          font-size: 15px;
         }
       }
     </style>
+    <% if (status === 'error') { %>
+    <style>
+      form .alert-msg p {
+        border: 1px solid red;
+        height: 65px;
+        width: 50%;
+        position: absolute;
+        top: 65px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: red;
+        border-radius: 5px;
+        color: white;
+        text-align: center;
+        padding: 3px;
+        visibility: hidden;
+      }
+      #password {
+        border: 1px solid red;
+      }
+      #password:focus {
+        box-shadow: 0 0 0 1px red;
+      }
+    </style>
+    <% } else if (status === 'successful') {%>
+    <style>
+      form .alert-msg p {
+        border: 1px solid rgb(0, 0, 0);
+        height: 65px;
+        width: 50%;
+        position: absolute;
+        top: 65px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(37, 255, 84);
+        border-radius: 5px;
+        color: white;
+        text-shadow: 0px 0px 2px black;
+        text-align: center;
+        padding: 3px;
+      }
+    </style>
+    <% } %>
     <header>
       <div class="logo">
         <h1>Note Keeper ✓</h1>
@@ -171,7 +209,7 @@
         <h1>Log In!</h1>
         <hr />
         <div class="alert-msg">
-          <p>There is no user with that username and password!</p>
+          <p></p>
         </div>
 
         <label for="username">Username:</label>
@@ -191,12 +229,25 @@
           placeholder="Password..."
           required
         />
+        <% if (status === 'error') { %>
+        <div class="alert-text">
+          <p>Incorrect username or password!</p>
+        </div>
+        <% } %>
 
         <button type="submit" id="submit">Submit!</button>
         <a href="/signup">Don't have an account? Sign Up!</a>
       </form>
       <div class="all-users"></div>
     </div>
-    <script></script>
+    <% if (status === 'successful') { %>
+    <script>
+      document.querySelector('.alert-msg p').innerText =
+        'Successfully created an account! You can now log in!';
+      setTimeout(() => {
+        document.querySelector('.alert-msg p').style.visibility = 'hidden';
+      }, 5000);
+    </script>
+    <% } %>
   </body>
 </html>
