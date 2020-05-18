@@ -270,10 +270,10 @@
         if (passCurrent.value && passNew.value) {
           if (passCurrent.value === passNew.value) {
             alert('Passwords must be different!');
-          } else if (passCurrent.vlaue !== passNew.value) {
-            passForm.submit();
           } else if (passNew.value.length < 5) {
             alert('Password mush be 5 characters long!');
+          } else if (passCurrent.vlaue !== passNew.value) {
+            passForm.submit();
           }
         } else {
           alert('No information entered!');
