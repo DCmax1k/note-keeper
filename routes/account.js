@@ -92,14 +92,16 @@ router.post('/:id/addnote', async (req, res) => {
 router.post('/:id/deletenote', async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.id);
-    const updatedUser = await User.findByIdAndUpdate(
+    const notes = currentUser.notes;
+    notes.splice(req.body.notetoremove, 1);
+    const userUpdate = await User.findByIdAndUpdate(
       req.params.id,
       {
-        $pull: { notes: req.body.notetoremove },
+        $set: { notes: notes },
       },
       { useFindAndModify: false }
     );
-    const saveUser = await updatedUser.save();
+    const saveUser = await userUpdate.save();
     res.redirect(`/account/${currentUser.username}?k=${currentUser._id}`);
   } catch (err) {
     console.error(err);

@@ -322,16 +322,16 @@
             {%>s<% } else if (user.notes.length === 0) {%>s<% } %>:
           </h2>
         </div>
-        <% user.notes.forEach(note => { %>
+        <% for (i = 0; i < user.notes.length; i++) { %>
         <div class="note">
-          <button value="<%= user.notes.indexOf(note) %>" class="delete-note">
+          <button value="<%= i %>" class="delete-note">
             Delete
           </button>
-          <p id="note<%= user.notes.indexOf(note) %>">
-            <%= note %>
+          <p id="note<%= i %>">
+            <%= user.notes[i] %>
           </p>
         </div>
-        <% }) %>
+        <% } %>
         <section id="bottom">
           <form
             action="/account/<%= user._id %>/addnote"
@@ -403,9 +403,8 @@
 
       deleteBtn.forEach((btn) => {
         btn.addEventListener('click', () => {
-          const delNote = document.getElementById('note' + btn.value);
-          hiddenFormInput.value = delNote.innerText;
-          console.log();
+          const delNoteIndex = btn.value;
+          hiddenFormInput.value = delNoteIndex;
           hiddenForm.submit();
         });
       });
