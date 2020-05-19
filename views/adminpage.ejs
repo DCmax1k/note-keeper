@@ -45,6 +45,34 @@
         align-items: center;
         margin: 10px;
       }
+      #grantAdminSubmit {
+        color: red;
+        background-color: transparent;
+        border: 1px solid black;
+        border-radius: 2px;
+        padding: 2px;
+        cursor: pointer;
+        margin-top: 3px;
+        transition: all 0.3s ease;
+      }
+      #grantAdminSubmit:hover {
+        background-color: red;
+        color: white;
+      }
+      #adminDeleteSubmit {
+        color: red;
+        background-color: transparent;
+        border: 1px solid black;
+        border-radius: 2px;
+        padding: 2px;
+        cursor: pointer;
+        margin-top: 5px;
+        transition: all 0.3s ease;
+      }
+      #adminDeleteSubmit:hover {
+        background-color: red;
+        color: white;
+      }
       @media screen and (max-width: 600px) {
         header {
           justify-content: space-around;
@@ -111,19 +139,7 @@
                   method="POST"
                   action="/settings/<%= user._id %>/<%= aUser.username %>?k=<%= aUser._id %>"
                 >
-                  <button
-                    type="submit"
-                    id="grantAdminSubmit"
-                    style="
-                      color: red;
-                      background-color: transparent;
-                      border: 1px solid black;
-                      border-radius: 2px;
-                      padding: 2px;
-                      cursor: pointer;
-                      margin-top: 2px;
-                    "
-                  >
+                  <button type="submit" id="grantAdminSubmit">
                     !Grant Admin!
                   </button>
                 </form>
@@ -134,19 +150,7 @@
                   method="POST"
                   action="/settings/<%= user._id %>/<%= aUser.username %>/admindelete?k=<%= aUser._id %>"
                 >
-                  <button
-                    type="submit"
-                    id="adminDeleteSubmit"
-                    style="
-                      color: red;
-                      background-color: transparent;
-                      border: 1px solid black;
-                      border-radius: 2px;
-                      padding: 2px;
-                      cursor: pointer;
-                      margin-top: 2px;
-                    "
-                  >
+                  <button type="submit" id="adminDeleteSubmit">
                     !Delete Account!
                   </button>
                 </form>
