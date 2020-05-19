@@ -89,6 +89,12 @@
         height: 30px !important;
         transform: translateY(-100%);
       }
+      #capSensative {
+        position: absolute;
+        left: 20px;
+        top: 215px;
+        font-size: 11px;
+      }
       form h1 {
         position: absolute;
         top: 20px;
@@ -224,9 +230,7 @@
           required
         />
 
-        <label for="username"
-          >Username: <i class="fas fa-info-circle"></i> Cap sensative!
-        </label>
+        <label for="username">Username: </label>
         <p id="usernameAlert">Username is taken!</p>
         <input
           type="text"
@@ -235,6 +239,9 @@
           placeholder="Username..."
           required
         />
+        <span id="capSensative"
+          ><i class="fas fa-info-circle"></i> Cap sensative!</span
+        >
 
         <label for="password">Password:</label>
         <p id="passwordAlert">Password must be 5 charactors or more!</p>
