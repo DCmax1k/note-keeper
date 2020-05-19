@@ -11,7 +11,13 @@ router.get('/:username', async (req, res) => {
       currentUser.username === req.params.username &&
       currentUser.online == true
     ) {
-      res.render('settings', { user: currentUser, passwordStatus: null });
+      if (req.query.cp === 'succ') {
+        res.render('settings', { user: currentUser, cp: 'succ' });
+      } else if (req.query.cp === 'err') {
+        res.render('settings', { user: currentUser, cp: 'err' });
+      } else {
+        res.render('settings', { user: currentUser, cp: null });
+      }
     } else {
       res.redirect('/login');
     }
@@ -26,7 +32,9 @@ router.post('/:id/changepassword', async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.id);
     if (currentUser.password != req.body.currentPassword) {
-      res.redirect(`/settings/${currentUser.username}?k=${currentUser._id}`);
+      res.redirect(
+        `/settings/${currentUser.username}?k=${currentUser._id}&cp=err`
+      );
     } else if (currentUser.online == true) {
       const updatePassword = await User.findByIdAndUpdate(
         req.params.id,

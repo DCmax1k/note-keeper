@@ -124,6 +124,31 @@
       .bottom-btns {
         visibility: hidden;
       }
+      #changePasswordSucc {
+        visibility: hidden;
+        position: absolute;
+        font-size: 11px;
+        top: 245px;
+        left: 50%;
+        transform: translateX(-70%);
+        color: green;
+      }
+      #changePasswordErr {
+        visibility: hidden;
+        position: absolute;
+        font-size: 11px;
+        top: 245px;
+        left: 34%;
+        color: red;
+      }
+      #newPasswordAlert {
+        visibility: hidden;
+        position: absolute;
+        font-size: 11px;
+        top: 245px;
+        left: 48.2%;
+        color: red;
+      }
       @media screen and (max-width: 500px) {
         .admin-btn {
           position: absolute;
@@ -191,6 +216,25 @@
         }
       }
     </style>
+    <% if (cp === 'succ') { %>
+    <style>
+      #changePassword input {
+        border: 1px solid green;
+      }
+      #changePasswordSucc {
+        visibility: visible;
+      }
+    </style>
+    <% } else if (cp === 'err') { %>
+    <style>
+      #changePassword #currentPassword {
+        border: 1px solid red;
+      }
+      #changePasswordErr {
+        visibility: visible;
+      }
+    </style>
+    <% } %>
     <header>
       <a href="/account/<%= user.username %>?k=<%= user._id %>" class="back"
         >Back</a
@@ -218,7 +262,11 @@
           method="POST"
           id="changePassword"
         >
-          <h3>Change Password:</h3>
+          <h3>
+            Change Password:
+          </h3>
+          <p id="changePasswordSucc">Password successfully changed!</p>
+          <p id="changePasswordErr">Incorrect Password!</p>
           <input
             type="password"
             placeholder="Current Password"
@@ -226,6 +274,7 @@
             id="currentPassword"
             required
           />
+          <p id="newPasswordAlert"></p>
           <input
             type="password"
             placeholder="New Password"
@@ -233,6 +282,7 @@
             id="newPassword"
             required
           />
+
           <button type="submit" id="submitPassword">Change</button>
         </form>
         <form
@@ -269,15 +319,37 @@
         e.preventDefault();
         if (passCurrent.value && passNew.value) {
           if (passCurrent.value === passNew.value) {
-            alert('Passwords must be different!');
+            passNew.style.border = '1px solid red';
+            document.getElementById('newPasswordAlert').style.visibility =
+              'visible';
+            document.getElementById('newPasswordAlert').innerText =
+              'Passwords must be different!';
           } else if (passNew.value.length < 5) {
-            alert('Password mush be 5 characters long!');
+            passNew.style.border = '1px solid red';
+            document.getElementById('newPasswordAlert').style.visibility =
+              'visible';
+            document.getElementById('newPasswordAlert').innerText =
+              'Password mush be 5 characters long!';
           } else if (passCurrent.vlaue !== passNew.value) {
             passForm.submit();
           }
         } else {
           alert('No information entered!');
         }
+      });
+
+      passCurrent.addEventListener('click', () => {
+        passCurrent.style.border = '1px solid black';
+        document.getElementById('changePasswordErr').style.visibility =
+          'hidden';
+        document.getElementById('changePasswordSucc').style.visibility =
+          'hidden';
+      });
+      passNew.addEventListener('click', () => {
+        passNew.style.border = '1px solid black';
+        document.getElementById('newPasswordAlert').style.visibility = 'hidden';
+        document.getElementById('changePasswordSucc').style.visibility =
+          'hidden';
       });
 
       const deleteAccountForm = document.getElementById('deleteAccount');
