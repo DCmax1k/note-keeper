@@ -75,6 +75,9 @@
         height: 500px;
         justify-content: space-around;
       }
+      #changePassword {
+        position: relative;
+      }
       #changePassword h3 {
         margin: 5px;
       }
@@ -86,6 +89,7 @@
         transition: all 0.3s ease;
         margin-right: 5px;
         height: 30px;
+        margin-top: 12px;
       }
       #changePassword input:focus {
         box-shadow: 0 0 0 2px rgb(0, 140, 255);
@@ -128,25 +132,28 @@
         visibility: hidden;
         position: absolute;
         font-size: 11px;
-        top: 245px;
-        left: 50%;
-        transform: translateX(-70%);
+        bottom: 0;
+        left: 20%;
+        transform: translateY(100%);
         color: green;
       }
       #changePasswordErr {
         visibility: hidden;
         position: absolute;
         font-size: 11px;
-        top: 245px;
-        left: 34%;
+        bottom: 0;
+        transform: translateY(100%);
+        left: 1%;
         color: red;
+        text-align: center;
       }
       #newPasswordAlert {
         visibility: hidden;
         position: absolute;
         font-size: 11px;
-        top: 245px;
-        left: 48.2%;
+        bottom: 0;
+        left: 44%;
+        transform: translateY(100%);
         color: red;
       }
       @media screen and (max-width: 500px) {
@@ -173,6 +180,18 @@
         .information form button {
           margin-top: 5px;
           width: 100%;
+        }
+        #changePasswordErr {
+          bottom: 119px;
+          left: 2%;
+        }
+        #changePasswordSucc {
+          bottom: 119px;
+          left: 2%;
+        }
+        #newPasswordAlert {
+          bottom: 76px;
+          left: 2%;
         }
       }
       @media screen and (max-width: 400px) {
