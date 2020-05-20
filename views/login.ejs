@@ -183,22 +183,16 @@
     <% } else if (status === 'successful') {%>
     <style>
       form .alert-msg p {
-        border: 1px solid rgb(0, 0, 0);
-        height: 65px;
-        width: 50%;
         position: absolute;
-        top: 65px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgb(37, 255, 84);
+        top: 120px;
+        left: 25px;
         border-radius: 5px;
-        color: white;
-        text-shadow: 0px 0px 2px black;
+        color: green;
         text-align: center;
-        padding: 3px;
+        font-size: 11px;
+      }
+      form input {
+        border: 1px solid green;
       }
     </style>
     <% } %>
@@ -248,9 +242,11 @@
     <script>
       document.querySelector('.alert-msg p').innerText =
         'Successfully created an account! You can now log in!';
-      setTimeout(() => {
-        document.querySelector('.alert-msg p').style.visibility = 'hidden';
-      }, 5000);
+      document.querySelectorAll('form input').forEach((input) => {
+        input.addEventListener('focus', () => {
+          input.style.border = '1px solid grey';
+        });
+      });
     </script>
     <% } %> <% if (user) { %>
     <script>
