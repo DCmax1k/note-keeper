@@ -185,7 +185,7 @@
       form .alert-msg p {
         position: absolute;
         top: 120px;
-        left: 25px;
+        left: 6%;
         border-radius: 5px;
         color: green;
         text-align: center;
@@ -241,7 +241,7 @@
     <% if (status === 'successful') { %>
     <script>
       document.querySelector('.alert-msg p').innerText =
-        'Successfully created an account! You can now log in!';
+        'Successfully created an account!';
       document.querySelectorAll('form input').forEach((input) => {
         input.addEventListener('focus', () => {
           input.style.border = '1px solid grey';
