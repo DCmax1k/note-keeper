@@ -259,7 +259,7 @@
         >Back</a
       >
       <h1>Settings</h1>
-      <% if (user.rank === 'admin') { %>
+      <% if (user.rank === 'admin' || user.rank === 'owner') { %>
       <div class="admin-btn">
         <a href="/settings/admin/<%= user.username %>?k=<%= user._id %>"
           >!Admin Accessibility!</a

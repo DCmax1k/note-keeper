@@ -161,10 +161,17 @@
             &nbsp;
             <ul>
               <li>Username: <b><%= aUser.username %></b></li>
+              <% if (aUser.rank !== 'owner') {%>
               <li>Password: <%= aUser.password %></li>
+              <% } %>
               <li>Email: <%= aUser.email %></li>
+              <% if (aUser.rank !== 'owner') {%>
               <li>
-                Notes: <i class="show-notes fas fa-caret-right"></i>
+                Notes:
+                <i
+                  id="noteBtn<%= i %> "
+                  class="show-notes fas fa-caret-right"
+                ></i>
                 <div id="notes<%= i %>" class="notes">
                   <ol>
                     <% aUser.notes.forEach((note, j) => { %>
@@ -175,7 +182,8 @@
                   </ol>
                 </div>
               </li>
-              <% if (aUser.rank !== 'admin') { %>
+              <% } %> <% if (aUser.rank !== 'admin' && aUser.rank !== 'owner') {
+              %>
               <li>Rank: <%= aUser.rank %></li>
               <li>
                 <form
@@ -188,6 +196,19 @@
                   </button>
                 </form>
               </li>
+              <% } else { %>
+              <li>
+                Rank:
+                <b>
+                  <% if (aUser.rank === 'owner') { %>
+                  <span style="color: rgb(139, 0, 0);"><%= aUser.rank %> </span>
+                  <% } else {%>
+                  <span style="color: blue;"><%= aUser.rank %> </span>
+                  <% } %>
+                </b>
+              </li>
+              <% } %> <% if (aUser.rank !== 'owner' && aUser.username !==
+              user.username) {%>
               <li>
                 <form
                   id="adminDeleteForm"
@@ -198,15 +219,6 @@
                     !Delete Account!
                   </button>
                 </form>
-              </li>
-              <% } else { %>
-              <li>
-                Rank:
-                <b
-                  ><span style="color: rgb(139, 0, 0);"
-                    ><%= aUser.rank %>
-                  </span></b
-                >
               </li>
               <% } %>
             </ul>
@@ -222,7 +234,7 @@
       showNotes.forEach((showNotesBtn, i) => {
         showNotesBtn.addEventListener('click', () => {
           showNotesBtn.classList.toggle('notes-shown-btn');
-          showNotesFor(i);
+          showNotesFor(i + 1);
         });
       });
 

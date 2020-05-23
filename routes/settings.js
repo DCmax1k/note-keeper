@@ -103,8 +103,8 @@ router.post('/:adminid/:username/admindelete', async (req, res) => {
     const admin = await User.findById(req.params.adminid);
     const currentUser = await User.findById(req.query.k);
     if (
-      admin.rank === 'admin' &&
-      currentUser.username === req.params.username
+      admin.rank === 'admin' ||
+      (admin.rank === 'owner' && currentUser.username === req.params.username)
     ) {
       const deleteUser = await User.deleteOne({
         username: currentUser.username,
@@ -120,13 +120,14 @@ router.post('/:adminid/:username/admindelete', async (req, res) => {
   }
 });
 
+// Admin grant admin
 router.post('/:admin/:username', async (req, res) => {
   try {
     const admin = await User.findById(req.params.admin);
     const currentUser = await User.findById(req.query.k);
     if (
-      admin.rank === 'admin' &&
-      currentUser.username === req.params.username
+      admin.rank === 'admin' ||
+      (admin.rank === 'owner' && currentUser.username === req.params.username)
     ) {
       const grantRank = await User.findByIdAndUpdate(
         currentUser._id,
