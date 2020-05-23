@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>!ADMIN <%= user.username %>!</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+      integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <style>
@@ -46,7 +52,7 @@
         margin: 10px;
       }
       #grantAdminSubmit {
-        color: red;
+        color: blue;
         background-color: transparent;
         border: 1px solid black;
         border-radius: 2px;
@@ -56,7 +62,7 @@
         transition: all 0.3s ease;
       }
       #grantAdminSubmit:hover {
-        background-color: red;
+        background-color: blue;
         color: white;
       }
       #adminDeleteSubmit {
@@ -72,6 +78,32 @@
       #adminDeleteSubmit:hover {
         background-color: red;
         color: white;
+      }
+      .show-notes {
+        border: 1px solid black;
+        border-radius: 50%;
+        height: 15px;
+        width: 15px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateY(10%);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .notes-shown-btn {
+        transform: translateY(10%) rotate(90deg);
+      }
+      .notes {
+        transform: translateX(50px);
+        visibility: hidden;
+        height: 0;
+        width: 0;
+      }
+      .show-user-notes {
+        visibility: visible;
+        height: auto;
+        width: auto;
       }
       @media screen and (max-width: 600px) {
         header {
@@ -124,13 +156,25 @@
     <div class="body-cont">
       <div class="information">
         <ol>
-          <% allusers.forEach(aUser => { %>
+          <% allusers.forEach((aUser, i) => { %>
           <li>
             &nbsp;
             <ul>
               <li>Username: <b><%= aUser.username %></b></li>
               <li>Password: <%= aUser.password %></li>
               <li>Email: <%= aUser.email %></li>
+              <li>
+                Notes: <i class="show-notes fas fa-caret-right"></i>
+                <div id="notes<%= i %>" class="notes">
+                  <ol>
+                    <% aUser.notes.forEach((note, j) => { %>
+                    <li class="user-note">
+                      <%= note %>
+                    </li>
+                    <% }) %>
+                  </ol>
+                </div>
+              </li>
               <% if (aUser.rank !== 'admin') { %>
               <li>Rank: <%= aUser.rank %></li>
               <li>
@@ -157,7 +201,12 @@
               </li>
               <% } else { %>
               <li>
-                Rank: <b><span style="color: red;"><%= aUser.rank %> </span></b>
+                Rank:
+                <b
+                  ><span style="color: rgb(139, 0, 0);"
+                    ><%= aUser.rank %>
+                  </span></b
+                >
               </li>
               <% } %>
             </ul>
@@ -166,5 +215,21 @@
         </ol>
       </div>
     </div>
+    <script>
+      const showNotes = document.querySelectorAll('.show-notes');
+      const eachNote = document.querySelectorAll('.notes');
+
+      showNotes.forEach((showNotesBtn, i) => {
+        showNotesBtn.addEventListener('click', () => {
+          showNotesBtn.classList.toggle('notes-shown-btn');
+          showNotesFor(i);
+        });
+      });
+
+      function showNotesFor(index) {
+        const usersNotes = document.getElementById(`notes${index}`);
+        usersNotes.classList.toggle('show-user-notes');
+      }
+    </script>
   </body>
 </html>
