@@ -4,10 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= user.username %>'s Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+      integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&display=swap'); /* font-family: 'DM Mono', monospace; */
+      @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap'); /* font-family: 'Varela Round', sans-serif; */
 
       * {
         margin: 0;
@@ -21,13 +28,21 @@
         align-items: center;
         width: 100%;
         height: 80px;
+        border-bottom: 1px solid black;
+        box-shadow: 0 2px 5px black;
+      }
+      body {
+        background-color: darkgrey;
+      }
+      .body-cont {
+        overflow-x: hidden;
       }
       .settings {
         position: absolute;
         top: 0;
         left: 0;
         height: 100%;
-        width: 150px;
+        width: 200px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -134,6 +149,7 @@
       }
       .title h1 {
         text-decoration: underline;
+        font-family: 'Varela Round', sans-serif;
       }
       .notes-title {
         width: 100%;
@@ -163,25 +179,26 @@
       }
       .notes .note .delete-note {
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 2%;
-        background-color: red;
-        height: 30px;
-        min-width: 9%;
+        font-size: 10px;
+        top: 0px;
+        right: 0px;
+        transform: translate(30%, -30%);
+        background-color: rgb(41, 41, 41);
+        height: 20px;
+        width: 20px;
         box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.5);
         border: none;
         border-radius: 3px;
         cursor: pointer;
         transition: all 0.3s ease;
         padding: 2px;
+        color: white;
       }
       .notes .note .delete-note:hover {
-        box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.5);
+        box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.5);
       }
       .notes .note p {
         word-wrap: break-word;
-        margin-right: 11%;
       }
       form {
         width: 100%;
@@ -191,40 +208,43 @@
         align-items: center;
         position: relative;
       }
+      #newNoteForm {
+        display: block;
+      }
       form #newNote {
         position: absolute;
-        top: 5px;
-        left: 1%;
+        bottom: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 75%;
         padding: 5px;
-        margin: 5px;
         box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.5);
         border: none;
         border-radius: 3px;
-        background-color: rgb(0, 255, 42);
+        background-color: rgb(41, 41, 41);
         cursor: pointer;
         transition: all 0.2s ease;
-        min-height: 40px;
-        width: 15%;
         font-size: 15px;
-        text-shadow: -1px 1px 1px rgba(255, 255, 255, 0.9);
+        text-shadow: -1px 1px 1px rgba(0, 0, 0, 0.9);
         outline: none;
+        color: white;
       }
       form #newNote:hover {
         box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.5);
       }
-      form textarea {
-        margin: 10px;
+      form #newnote {
+        margin-left: 50%;
+        transform: translateX(-50%);
         padding: 10px;
         width: 75%;
         margin-bottom: 50px;
         border: 1px solid black;
-        transform: translateX(10%);
       }
       .del-all-notes button {
         position: absolute;
         bottom: 10px;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, 200%);
         padding: 3px;
         outline: none;
         border: 1px solid lack;
@@ -237,7 +257,7 @@
       #hiddenForm {
         display: none;
       }
-      section {
+      #bottom {
         width: 100%;
       }
       @media screen and (max-width: 700px) {
@@ -254,12 +274,10 @@
         }
         .settings2 {
           visibility: visible;
+          transform: translateY(100%);
         }
       }
       @media screen and (max-width: 500px) {
-        .notes .note p {
-          margin-right: 18%;
-        }
         .logo h1 {
           text-align: center;
           margin-left: 0;
@@ -267,11 +285,21 @@
         .notes .note {
           width: 90%;
         }
+        form textarea {
+          width: 90% !important;
+        }
+        #newNote {
+          width: 90% !important;
+        }
         .logout-btn #logoutBtn {
           visibility: hidden;
         }
         .logout-btn2 #logoutBtn2 {
           visibility: visible;
+          transform: translateY(100%);
+        }
+        .logout-btn2 {
+          margin-bottom: 300px;
         }
       }
       @media screen and (max-width: 300px) {
@@ -285,14 +313,7 @@
           font-size: 25px;
         }
         .notes-title h2 {
-          width: 100%;
-        }
-        form textarea {
-          width: 70%;
-        }
-        #newNote {
-          width: 18% !important;
-          left: 0.5% !important;
+          width: 95%;
         }
       }
     </style>
@@ -325,7 +346,7 @@
         <% for (i = 0; i < user.notes.length; i++) { %>
         <div class="note">
           <button value="<%= i %>" class="delete-note">
-            Delete
+            <i class="fas fa-trash-alt"></i>
           </button>
           <p id="note<%= i %>">
             <%= user.notes[i] %>
