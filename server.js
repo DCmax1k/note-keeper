@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 // DB CONNECTION
 mongoose.connect(
-  process.env.MONGO_CONNECTION,
+  'mongodb+srv://DCmax1k:llewdlaC35@first-rest-api-cluster-9e2jp.mongodb.net/test?retryWrites=true&w=majority',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
