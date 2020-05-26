@@ -2,10 +2,11 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 // DB CONNECTION
 mongoose.connect(
-  'mongodb+srv://DCmax1k:llewdlaC35@first-rest-api-cluster-9e2jp.mongodb.net/test?retryWrites=true&w=majority',
+  process.env.DB_CONNECTION,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
