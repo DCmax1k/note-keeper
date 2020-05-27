@@ -14,6 +14,11 @@ const UserSchema = mongoose.Schema({
     required: true,
   },
   notes: [String],
+  sortOption: {
+    type: String,
+    required: true,
+    default: 'descending',
+  },
   online: {
     type: Boolean,
     default: false,

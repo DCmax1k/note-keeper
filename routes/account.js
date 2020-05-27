@@ -151,4 +151,36 @@ router.post('/:id/deleteallnotes', async (req, res) => {
   }
 });
 
+// Change Sort Option
+router.post('/:id/sortoption', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (user.online == true) {
+      if (user.sortOption === 'descending') {
+        const changeSort = await User.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: { sortOption: 'ascending' },
+          },
+          { useFindAndModify: false }
+        );
+        const saveUser = await changeSort.save();
+      } else if (user.sortOption === 'ascending') {
+        const changeSort = await User.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: { sortOption: 'descending' },
+          },
+          { useFindAndModify: false }
+        );
+        const saveUser = await changeSort.save();
+      }
+      res.redirect(`/account/${user.username}?k=${user._id}`);
+    }
+  } catch (err) {
+    console.error(err);
+    res.redirect('/login');
+  }
+});
+
 module.exports = router;

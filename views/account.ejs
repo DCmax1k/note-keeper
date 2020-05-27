@@ -163,6 +163,22 @@
         margin: 10px;
         padding: 10px;
         width: 75%;
+        position: relative;
+      }
+      .notes-title h2 p {
+        position: absolute;
+        right: 5%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .notes-title h2 p span {
+        border: 1px solid grey;
+        border-radius: 10px;
+        padding: 5px 5px 7px 5px;
+        cursor: pointer;
+      }
+      #sortArrow {
+        font-size: 18px;
       }
       .notes {
         width: 100%;
@@ -261,6 +277,9 @@
       #bottom {
         width: 100%;
       }
+      #sortOptionForm {
+        display: none;
+      }
       @media screen and (max-width: 700px) {
         .logo h1 {
           text-align: start;
@@ -276,6 +295,15 @@
         .settings2 {
           visibility: visible;
           transform: translateY(100%);
+        }
+        .notes-title h2 {
+          height: 90px;
+        }
+        .notes-title h2 p {
+          transform: translateY(0);
+          bottom: 0;
+          left: 0;
+          padding: 2px 5px;
         }
       }
       @media screen and (max-width: 500px) {
@@ -301,6 +329,9 @@
         .logout-btn2 {
           margin-bottom: 300px;
         }
+        .notes-title h2 {
+          width: 90%;
+        }
       }
       @media screen and (max-width: 300px) {
         .notes .note {
@@ -317,6 +348,13 @@
         }
       }
     </style>
+    <% if (user.sortOption === 'descending') { %>
+    <style>
+      #sortArrow {
+        transform: rotate(180deg);
+      }
+    </style>
+    <% } %>
     <header>
       <div class="settings">
         <a href="/settings/<%= user.username %>?k=<%= user._id %>">Settings</a>
@@ -341,9 +379,19 @@
           <h2>
             You have <%= user.notes.length %> note<% if (user.notes.length > 1)
             {%>s<% } else if (user.notes.length === 0) {%>s<% } %>:
+            <p>
+              Sort by
+              <span id="sortOptionSpan"
+                ><%= user.sortOption %>&nbsp;<i
+                  id="sortArrow"
+                  class="fas fa-chevron-up"
+                ></i
+              ></span>
+            </p>
           </h2>
         </div>
-        <% for (i = 0; i < user.notes.length; i++) { %>
+        <% if (user.sortOption === 'descending') { %> <% for (i = 0; i <
+        user.notes.length; i++) { %>
         <div class="note">
           <button value="<%= i %>" class="delete-note">
             <i class="fas fa-trash-alt"></i>
@@ -352,7 +400,17 @@
             <%= user.notes[i] %>
           </p>
         </div>
-        <% } %>
+        <% }} else if (user.sortOption === 'ascending') { %> <% for (i =
+        user.notes.length - 1; i >= 0; i--) { %>
+        <div class="note">
+          <button value="<%= i %>" class="delete-note">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+          <p id="note<%= i %>">
+            <%= user.notes[i] %>
+          </p>
+        </div>
+        <% } %> <% } %>
         <section id="bottom">
           <form
             action="/account/<%= user._id %>/addnote"
@@ -401,6 +459,11 @@
     >
       <input type="text" name="notetoremove" id="notetoremove" />
     </form>
+    <form
+      action="/account/<%= user._id %>/sortoption"
+      method="POST"
+      id="sortOptionForm"
+    ></form>
 
     <script>
       const newNoteForm = document.getElementById('newNoteForm');
@@ -428,6 +491,13 @@
           hiddenFormInput.value = delNoteIndex;
           hiddenForm.submit();
         });
+      });
+
+      const sortOptionForm = document.getElementById('sortOptionForm');
+      const sortOptionBtn = document.getElementById('sortOptionSpan');
+
+      sortOptionBtn.addEventListener('click', () => {
+        sortOptionForm.submit();
       });
     </script>
   </body>
