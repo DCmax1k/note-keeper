@@ -1,10 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const nodemailer = require('nodemailer');
 
 const User = require('../models/User');
 
 router.get('/', (req, res) => {
   res.redirect('/');
+});
+
+// Mail Configuration
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'notekeeperapi@gmail.com',
+    pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
 
 // Creates a user from from on signup
@@ -16,10 +29,45 @@ router.post('/', async (req, res) => {
   });
   try {
     const saveUser = await user.save();
+    let mailOptions = {
+      from: 'notekeeperapi@gmail.com',
+      to: req.body.email,
+      subject: 'Account Sign Up',
+      html: `
+            <p>Thanks for creating an account with Note Keeper!
+            You can confirm your email address with this link.</p>
+            <a href="https://note-keeper-api.herokuapp.com/account/${saveUser._id}/confirmemail">Confirm Email</a>
+          `,
+    };
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log('email sent');
+      }
+    });
     res.redirect(`/login?e=log&username=${req.body.username}`);
   } catch (e) {
     console.log(e);
     res.redirect('/signup');
+  }
+});
+
+// Confirm Email
+router.get('/:id/confirmemail', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const currentUserUpdate = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: { emailConfirmed: true },
+      },
+      { useFindAndModify: false }
+    );
+    const saveUser = await currentUserUpdate.save();
+    res.send(`Email: ${user.email}, is now confirmed!`);
+  } catch (err) {
+    console.error(err);
   }
 });
 
