@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
   try {
     const saveUser = await user.save();
     let mailOptions = {
-      from: 'notekeeperapi@gmail.com',
+      from: 'Note Keeper ✓',
       to: req.body.email,
       subject: 'Account Sign Up',
       html: `
@@ -42,8 +42,6 @@ router.post('/', async (req, res) => {
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
         console.error(err);
-      } else {
-        console.log('email sent');
       }
     });
     res.redirect(`/login?e=log&username=${req.body.username}`);
@@ -66,6 +64,31 @@ router.get('/:id/confirmemail', async (req, res) => {
     );
     const saveUser = await currentUserUpdate.save();
     res.send(`Email: ${user.email}, is now confirmed!`);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+// Resend Email
+router.post('/:id/resendemail', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    let mailOptions = {
+      from: 'Note Keeper ✓',
+      to: user.email,
+      subject: 'Account Sign Up',
+      html: `
+            <p>Thanks for creating an account with Note Keeper!
+            You can confirm your email address with this link.</p>
+            <a href="https://note-keeper-api.herokuapp.com/account/${user._id}/confirmemail">Confirm Email</a>
+          `,
+    };
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.error(err);
+      }
+    });
+    res.redirect(`/account/${user.username}?k=${user._id}`);
   } catch (err) {
     console.error(err);
   }
