@@ -31,6 +31,7 @@ const UserSchema = mongoose.Schema({
     type: String,
     default: 'default',
   },
+  pin: Number,
 });
 
 module.exports = mongoose.model('User', UserSchema);
