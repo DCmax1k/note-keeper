@@ -34,6 +34,10 @@ app.use('/settings', settingsRoute);
 
 const forgotpasswordRoute = require('./routes/forgotpassword');
 app.use('/forgotpassword', forgotpasswordRoute);
+
+const dylancaldwellRoute = require('./routes/dylancaldwell');
+app.user('/dylancaldwell', dylancaldwellRoute);
+
 // View engine
 app.set('view engine', 'ejs');
 
