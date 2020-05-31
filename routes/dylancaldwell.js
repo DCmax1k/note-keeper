@@ -38,7 +38,9 @@ router.post('/emailsubmission', async (req, res) => {
             `,
     };
     transporter.sendMail(mailOptions, (err, data) => {
-      if (err) console.error(err);
+      if (err) {
+        return console.error(err);
+      }
     });
     res.redirect('https://www.dylancaldwell.tk/thanks');
   } catch (err) {
