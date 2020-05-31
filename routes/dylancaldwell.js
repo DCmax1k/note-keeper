@@ -46,3 +46,5 @@ router.post('/emailsubmission', async (req, res) => {
     res.redirect('https://www.dylancaldwell.tk');
   }
 });
+
+module.exports = router;
